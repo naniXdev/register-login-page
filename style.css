@@ -1,154 +1,156 @@
 /* style.css */
 
+/* --- SHARED BASE STYLES --- */
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f4f4f4; /* Soft grey-white background */
+    background: #f0f2f5; /* Light grey-blue background from your screenshot */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
 }
 
 .container {
-    background: #fdfdfd; /* Soft off-white */
-    padding: 35px 45px;  /* Balanced padding */
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    background: #ffffff; 
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     box-sizing: border-box;
-}
-
-/* Size Variants - Tight & Professional */
-.reg-container { 
-    width: 920px; 
-}
-
-.login-container { 
-    width: 420px; 
 }
 
 h2 {
     text-align: center;
-    margin-bottom: 25px;
-    color: #333;
-    font-size: 26px;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #000000; /* Deep black for the title */
     font-weight: 800;
+    font-size: 28px;
+}
+
+/* --- REGISTRATION FORM (WIDE) --- */
+.reg-container { 
+    width: 950px; 
 }
 
 table {
-    border-collapse: collapse;
     width: 100%;
+    border-collapse: collapse;
 }
 
 td {
-    vertical-align: top;
-    padding: 0 15px;
     width: 33.33%;
+    padding: 10px;
+    vertical-align: top;
 }
 
-/* Labels: Catchy & Bold */
+/* DARK & BOLD LABELS (Registration) */
 .field-label {
     display: block;
-    font-weight: 800;
-    margin-bottom: 8px;
-    color: #444; 
-    font-size: 16px; 
-}
-
-.inline {
-    display: flex;
-    align-items: center;
+    font-weight: 700; /* Extra bold */
     margin-bottom: 10px;
-    cursor: pointer;
-    color: #444; 
+    color: #000000; /* Pure Black - No fading */
+    font-size: 15px;
 }
 
-.inline b {
-    font-weight: 700;
+/* Radio & Checkbox Text Labels */
+.inline {
+    display: block;
+    margin-bottom: 8px;
     font-size: 14px;
+    font-weight: 700; /* Made these dark and bold too */
+    color: #000000;
 }
 
 .inline input {
-    width: auto;
-    margin: 0 10px 0 0;
+    margin-right: 8px;
 }
 
-/* Inputs */
+/* --- LOGIN FORM (NARROW) --- */
+.login-container { 
+    width: 400px; 
+}
+
+/* DARK & BOLD LABELS (Login Username/Password) */
+.login-container label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000000; /* Pure Black */
+    text-align: left;
+    font-size: 15px;
+}
+
+/* --- SHARED INPUTS & BUTTONS --- */
 input[type="text"], 
 input[type="password"], 
 select, 
 textarea {
     width: 100%;
-    padding: 10px 12px;
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    margin-bottom: 18px;
-    font-weight: 700;
-    color: #444;
-    font-size: 14px;
+    padding: 12px;
+    border: 1px solid #aaaaaa; /* Darker border for the boxes */
+    border-radius: 5px;
+    margin-bottom: 15px;
     box-sizing: border-box;
-    transition: all 0.2s ease;
+    font-size: 14px;
+    color: #000000; /* Typed text is dark black */
 }
 
-input:focus, select:focus, textarea:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 6px rgba(0, 123, 255, 0.15);
-    outline: none;
+textarea { resize: none; }
+
+/* Placeholder remains grey enough to look like a hint */
+::placeholder {
+    color: #666666;
+    font-style: italic;
 }
 
-/* Buttons Side-by-Side */
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin-top: 10px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+    gap: 15px;
+    margin-top: 15px;
+    border: none !important; /* Removes the separator line completely */
+    padding-top: 0;
 }
 
 button {
-    flex: 1; 
-    max-width: 160px;
-    padding: 12px;
+    padding: 10px 30px;
     border: none;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
-    font-weight: 900;
-    font-size: 14px;
-    text-transform: uppercase;
+    font-weight: 700;
     color: white;
-    transition: all 0.2s ease;
+    font-size: 16px;
+    text-transform: uppercase;
 }
 
 .register, .login-btn {
-    background: #007bff;
-}
-
-.register:hover, .login-btn:hover {
-    background: #0056b3;
-    transform: translateY(-2px);
+    background-color: #007bff;
 }
 
 .clear {
-    background: #dc3545;
+    background-color: #dc3545;
 }
 
-.clear:hover {
-    background: #a71d2a;
-    transform: translateY(-2px);
-}
-
+/* --- FOOTER & ERROR BOX --- */
 .footer-link {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .footer-link a {
     text-decoration: none;
-    color: #777;
+    color: #007bff;
     font-weight: 700;
-    font-size: 13px;
 }
 
-textarea { resize: none; }
+.error-box {
+    background: #fff0f3;
+    color: #d63384;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 800;
+    border: none !important; /* No border to ensure no "stray lines" */
+}
