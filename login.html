@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login Form</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container login-container">
+      <h2>Login Form</h2>
+
+      <form method="POST" action="login_process.php">
+        <label>Username:</label>
+        <input type="text" name="fname" required />
+
+        <label>Password:</label>
+        <input type="password" name="password" required />
+
+        <div class="buttons">
+          <button type="submit" class="login-btn">Login</button>
+          <button type="submit" formnovalidate name="clear" class="clear">
+            Clear
+          </button>
+        </div>
+
+        <?php if(isset($_GET['error'])): ?>
+        <div class="error-box">
+          <?php if($_GET['error'] == "wrongpass") echo "Incorrect Password!";
+          if($_GET['error'] == "notfound") echo "User not found!"; ?>
+        </div>
+        <?php endif; ?>
+
+        <div class="footer-link">
+          <a href="index.php">Create New Account</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
