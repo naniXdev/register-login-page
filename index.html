@@ -1,83 +1,78 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <title>Registration Form</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container reg-container">
       <h2>Registration Form</h2>
-      <form id="regForm" method="POST" action="register_process.php">
+
+      <form method="POST" action="register_process.php">
         <table>
           <tr>
             <td>
               <label class="field-label">First Name</label>
-              <input type="text" name="fname" id="fname" required />
-              <label class="field-label">Gender</label>
-              <div class="option-group">
-                <label class="inline"
-                  ><input type="radio" name="gender" value="Male" /><b
-                    >Male</b
-                  ></label
-                >
-                <label class="inline"
-                  ><input type="radio" name="gender" value="Female" /><b
-                    >Female</b
-                  ></label
-                >
-                <label class="inline"
-                  ><input type="radio" name="gender" value="Others" /><b
-                    >Others</b
-                  ></label
-                >
-              </div>
+              <input type="text" name="fname" required />
             </td>
             <td>
               <label class="field-label">Last Name</label>
-              <input type="text" name="lname" id="lname" required />
-              <label class="field-label">Hobbies</label>
-              <div class="option-group">
-                <label class="inline"
-                  ><input type="checkbox" name="hobbies[]" value="Reading" /><b
-                    >Reading</b
-                  ></label
-                >
-                <label class="inline"
-                  ><input type="checkbox" name="hobbies[]" value="Sports" /><b
-                    >Sports</b
-                  ></label
-                >
-                <label class="inline"
-                  ><input type="checkbox" name="hobbies[]" value="Music" /><b
-                    >Music</b
-                  ></label
-                >
-                <label class="inline"
-                  ><input type="checkbox" name="hobbies[]" value="Travel" /><b
-                    >Travel</b
-                  ></label
-                >
-              </div>
+              <input type="text" name="lname" required />
             </td>
             <td>
               <label class="field-label">Department</label>
               <select name="dept">
-                <option value=""></option>
                 <option>Computer Science</option>
-                <option>Architecture</option>
+                <option>Information Technology</option>
                 <option>Engineering</option>
               </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label class="field-label">Gender</label>
+              <div class="inline">
+                <input type="radio" name="gender" value="Male" /> Male
+              </div>
+              <div class="inline">
+                <input type="radio" name="gender" value="Female" /> Female
+              </div>
+              <div class="inline">
+                <input type="radio" name="gender" value="Other" /> Other
+              </div>
+            </td>
+            <td>
+              <label class="field-label">Hobbies</label>
+              <div class="inline">
+                <input type="checkbox" name="hobbies[]" value="Reading" />
+                Reading
+              </div>
+              <div class="inline">
+                <input type="checkbox" name="hobbies[]" value="Sports" /> Sports
+              </div>
+              <div class="inline">
+                <input type="checkbox" name="hobbies[]" value="Music" /> Music
+              </div>
+              <div class="inline">
+                <input type="checkbox" name="hobbies[]" value="Travel" /> Travel
+              </div>
+            </td>
+            <td>
               <label class="field-label">Others</label>
               <textarea name="others" rows="4"></textarea>
             </td>
           </tr>
         </table>
+
         <div class="buttons">
           <button type="submit" class="register">Register</button>
           <button type="reset" class="clear">Clear</button>
         </div>
+
         <div class="footer-link">
-          <a href="login.php">Already have an account? Login</a>
+          <a href="login.php">Already have an account? Login here</a>
         </div>
       </form>
     </div>
