@@ -1,24 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
     <title>Registration Form</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container reg-container">
       <h2>Registration Form</h2>
-
-      <form method="POST" action="register_process.php">
+      <form id="regForm" method="POST" action="register_process.php">
         <table>
           <tr>
             <td>
               <label class="field-label">First Name</label>
-              <input type="text" name="fname" required />
+              <input type="text" id="fname" name="fname" />
             </td>
             <td>
               <label class="field-label">Last Name</label>
-              <input type="text" name="lname" required />
+              <input type="text" id="lname" name="lname" />
             </td>
             <td>
               <label class="field-label">Department</label>
@@ -29,7 +27,6 @@
               </select>
             </td>
           </tr>
-
           <tr>
             <td>
               <label class="field-label">Gender</label>
@@ -46,29 +43,52 @@
             <td>
               <label class="field-label">Hobbies</label>
               <div class="inline">
-                <input type="checkbox" name="hobbies[]" value="Reading" />
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Reading"
+                />
                 Reading
               </div>
               <div class="inline">
-                <input type="checkbox" name="hobbies[]" value="Sports" /> Sports
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Sports"
+                />
+                Sports
               </div>
               <div class="inline">
-                <input type="checkbox" name="hobbies[]" value="Music" /> Music
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Music"
+                />
+                Music
               </div>
               <div class="inline">
-                <input type="checkbox" name="hobbies[]" value="Travel" /> Travel
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Travel"
+                />
+                Travel
               </div>
             </td>
             <td>
               <label class="field-label">Others</label>
-              <textarea name="others" rows="4"></textarea>
+              <textarea id="others" name="others" rows="4"></textarea>
             </td>
           </tr>
         </table>
 
         <div class="buttons">
           <button type="submit" class="register">Register</button>
-          <button type="reset" class="clear">Clear</button>
+          <button type="button" id="confirmClear" class="clear">Clear</button>
         </div>
 
         <div class="footer-link">
@@ -76,5 +96,533 @@
         </div>
       </form>
     </div>
+
+    <script>
+      // --- 1. THE CLEAR CONFIRMATION SIGNAL ---
+      document
+        .getElementById("confirmClear")
+        .addEventListener("click", function () {
+          // Displays a browser popup with OK and Cancel
+          const userConfirmed = confirm(
+            "Are you sure? This will wipe all the information you typed.",
+          );
+
+          if (userConfirmed) {
+            document.getElementById("regForm").reset();
+          }
+        });
+
+      // --- 2. THE REGISTRATION VALIDATION SIGNAL ---
+      document
+        .getElementById("regForm")
+        .addEventListener("submit", function (e) {
+          // Grab the elements
+          const fname = document.getElementById("fname").value.trim();
+          const lname = document.getElementById("lname").value.trim();
+          const gender = document.querySelector('input[name="gender"]:checked');
+          const hobbies = document.querySelectorAll(".hobby-check:checked");
+          const others = document.getElementById("others").value.trim();
+
+          let errors = [];
+
+          // Logic: Names must be filled
+          if (fname === "" || lname === "") {
+            errors.push("First and Last Name are required.");
+          }
+
+          // Logic: Gender must be selected
+          if (!gender) {
+            errors.push("Please select a Gender.");
+          }
+
+          // Logic: Must have a hobby OR something in the others box
+          if (hobbies.length === 0 && others === "") {
+            errors.push(
+              "Please select at least one hobby (like Travel!) or fill out the 'Others' box.",
+            );
+          }
+
+          // If there are errors, stop the form and alert the user
+          if (errors.length > 0) {
+            // This stops the 405 error by preventing the form from submitting
+            e.preventDefault();
+            alert("Wait! Please fix the following:\n\n" + errors.join("\n"));
+          }
+        });
+    </script>
   </body>
 </html>
+<!--
+<!doctype html>
+<html>
+  <head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Keeping the strength bar subtle */
+      #strengthBar {
+        background-color: #eee;
+        display: block;
+        height: 5px;
+        width: 0%;
+        transition: 0.3s;
+        margin-top: 8px;
+        border-radius: 10px;
+      }
+      #strengthText {
+        font-size: 0.75em;
+        font-weight: bold;
+        display: block;
+        margin-top: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container reg-container">
+      <h2>Registration Form</h2>
+      <form id="regForm" method="POST" action="register_process.php">
+        <table>
+          <tr>
+            <td>
+              <label class="field-label">First Name</label>
+              <input type="text" id="fname" name="fname" />
+            </td>
+            <td>
+              <label class="field-label">Last Name</label>
+              <input type="text" id="lname" name="lname" />
+            </td>
+            <td>
+              <label class="field-label">Department</label>
+              <select name="dept">
+                <option>Computer Science</option>
+                <option>Information Technology</option>
+                <option>Engineering</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label class="field-label">Gender</label>
+              <div class="inline">
+                <input type="radio" name="gender" value="Male" /> Male
+              </div>
+              <div class="inline">
+                <input type="radio" name="gender" value="Female" /> Female
+              </div>
+              <div class="inline">
+                <input type="radio" name="gender" value="Other" /> Other
+              </div>
+            </td>
+            <td>
+              <label class="field-label">Hobbies</label>
+              <div class="inline">
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Reading"
+                />
+                Reading
+              </div>
+              <div class="inline">
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Sports"
+                />
+                Sports
+              </div>
+              <div class="inline">
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Music"
+                />
+                Music
+              </div>
+              <div class="inline">
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Travel"
+                />
+                Travel
+              </div>
+            </td>
+            <td>
+              <label class="field-label">Others</label>
+              <textarea id="others" name="others" rows="4"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label class="field-label">Password</label>
+              <input
+                type="password"
+                id="regPass"
+                name="password"
+                placeholder="Create a password (6-20 chars)"
+              />
+
+              <div id="strengthBar"></div>
+              <span id="strengthText"></span>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+
+        <div class="buttons">
+          <button type="submit" class="register">Register</button>
+          <button type="button" id="confirmClear" class="clear">Clear</button>
+        </div>
+
+        <div class="footer-link">
+          <a href="login.php">Already have an account? Login here</a>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const passwordInput = document.getElementById("regPass");
+      const strengthBar = document.getElementById("strengthBar");
+      const strengthText = document.getElementById("strengthText");
+
+      // 1. REAL-TIME STRENGTH SIGNAL
+      passwordInput.addEventListener("input", function () {
+        const val = passwordInput.value;
+        const len = val.length;
+
+        // Force Max 20 Limit
+        if (len > 20) {
+          passwordInput.value = val.substring(0, 20);
+        }
+
+        // Calculate Strength
+        let strength = 0;
+        if (len >= 6) strength++;
+        if (/[A-Z]/.test(val)) strength++;
+        if (/[0-9]/.test(val)) strength++;
+        if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+        switch (strength) {
+          case 0:
+          case 1:
+            strengthBar.style.width = "25%";
+            strengthBar.style.backgroundColor = "#dc3545";
+            strengthText.textContent = "Weak";
+            strengthText.style.color = "#dc3545";
+            break;
+          case 2:
+            strengthBar.style.width = "50%";
+            strengthBar.style.backgroundColor = "#ffc107";
+            strengthText.textContent = "Medium";
+            strengthText.style.color = "#ffc107";
+            break;
+          case 3:
+          case 4:
+            strengthBar.style.width = "100%";
+            strengthBar.style.backgroundColor = "#28a745";
+            strengthText.textContent = "Strong!";
+            strengthText.style.color = "#28a745";
+            break;
+        }
+
+        if (len === 0) {
+          strengthBar.style.width = "0%";
+          strengthText.textContent = "";
+        }
+      });
+
+      // 2. CLEAR SIGNAL
+      document
+        .getElementById("confirmClear")
+        .addEventListener("click", function () {
+          if (confirm("Are you sure you want to clear the form?")) {
+            document.getElementById("regForm").reset();
+            strengthBar.style.width = "0%";
+            strengthText.textContent = "";
+          }
+        });
+
+      // 3. SUBMIT VALIDATION
+      document
+        .getElementById("regForm")
+        .addEventListener("submit", function (e) {
+          const fname = document.getElementById("fname").value.trim();
+          const lname = document.getElementById("lname").value.trim();
+          const password = document.getElementById("regPass").value.trim();
+          const gender = document.querySelector('input[name="gender"]:checked');
+          const hobbies = document.querySelectorAll(".hobby-check:checked");
+          const others = document.getElementById("others").value.trim();
+
+          let errors = [];
+          if (fname === "" || lname === "") errors.push("Names are required.");
+          if (password === "") {
+            errors.push("Password is required.");
+          } else if (password.length < 6) {
+            errors.push("Password must be at least 6 characters.");
+          }
+          if (!gender) errors.push("Please select a Gender.");
+          if (hobbies.length === 0 && others === "")
+            errors.push("Select a hobby or fill 'Others'.");
+
+          if (errors.length > 0) {
+            e.preventDefault();
+            alert("Wait! Please fix the following:\n\n" + errors.join("\n"));
+          }
+        });
+    </script>
+  </body>
+</html>
+-->
+
+<!--
+<!doctype html>
+<html>
+  <head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Hidden by default, appears on focus */
+      #passFeedbackContainer {
+        display: none;
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        border-left: 3px solid #ccc;
+      }
+
+      #passRequirements {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 0.75em;
+        color: #888;
+      }
+
+      .req-item {
+        margin-bottom: 3px;
+        transition: color 0.3s ease;
+      }
+
+      #strengthBar {
+        background-color: #eee;
+        height: 4px;
+        width: 0%;
+        transition: 0.3s;
+        margin-top: 8px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container reg-container">
+      <h2>Registration Form</h2>
+      <form id="regForm" method="POST" action="register_process.php">
+        <table>
+          <tr>
+            <td>
+              <label class="field-label">First Name</label>
+              <input type="text" id="fname" name="fname" />
+            </td>
+            <td>
+              <label class="field-label">Last Name</label>
+              <input type="text" id="lname" name="lname" />
+            </td>
+            <td>
+              <label class="field-label">Department</label>
+              <select name="dept">
+                <option>Computer Science</option>
+                <option>Information Technology</option>
+                <option>Engineering</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label class="field-label">Gender</label>
+              <div class="inline">
+                <input type="radio" name="gender" value="Male" /> Male
+              </div>
+              <div class="inline">
+                <input type="radio" name="gender" value="Female" /> Female
+              </div>
+              <div class="inline">
+                <input type="radio" name="gender" value="Other" /> Other
+              </div>
+            </td>
+            <td>
+              <label class="field-label">Hobbies</label>
+              <div class="inline">
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Reading"
+                />
+                Reading
+              </div>
+              <div class="inline">
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Sports"
+                />
+                Sports
+              </div>
+              <div class="inline">
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Music"
+                />
+                Music
+              </div>
+              <div class="inline">
+                <input
+                  type="checkbox"
+                  class="hobby-check"
+                  name="hobbies[]"
+                  value="Travel"
+                />
+                Travel
+              </div>
+            </td>
+            <td>
+              <label class="field-label">Others</label>
+              <textarea id="others" name="others" rows="4"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label class="field-label">Password</label>
+              <input
+                type="password"
+                id="regPass"
+                name="password"
+                placeholder="Click to create password"
+              />
+
+              <div id="passFeedbackContainer">
+                <ul id="passRequirements">
+                  <li id="reqLength" class="req-item">✖ 6-20 Characters</li>
+                  <li id="reqUpper" class="req-item">✖ One Uppercase Letter</li>
+                  <li id="reqNumber" class="req-item">✖ One Number</li>
+                </ul>
+                <div id="strengthBar"></div>
+                <span
+                  id="strengthText"
+                  style="font-size: 0.7em; font-weight: bold"
+                ></span>
+              </div>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+
+        <div class="buttons">
+          <button type="submit" class="register">Register</button>
+          <button type="button" id="confirmClear" class="clear">Clear</button>
+        </div>
+
+        <div class="footer-link">
+          <a href="login.php">Already have an account? Login here</a>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const passwordInput = document.getElementById("regPass");
+      const feedbackContainer = document.getElementById(
+        "passFeedbackContainer",
+      );
+      const strengthBar = document.getElementById("strengthBar");
+      const strengthText = document.getElementById("strengthText");
+
+      const reqLength = document.getElementById("reqLength");
+      const reqUpper = document.getElementById("reqUpper");
+      const reqNumber = document.getElementById("reqNumber");
+
+      // --- 1. SHOW/HIDE LOGIC ---
+      passwordInput.addEventListener("focus", function () {
+        feedbackContainer.style.display = "block"; // Shows when clicked
+      });
+
+      // Optional: Hide it when clicking away (if the field is empty)
+      passwordInput.addEventListener("blur", function () {
+        if (this.value === "") {
+          feedbackContainer.style.display = "none";
+        }
+      });
+
+      // --- 2. THE DYNAMIC SIGNAL LOGIC ---
+      passwordInput.addEventListener("input", function () {
+        const val = this.value;
+        const len = val.length;
+
+        if (len > 20) this.value = val.substring(0, 20);
+
+        // Update Requirements
+        check(reqLength, len >= 6 && len <= 20, "6-20 Characters");
+        check(reqUpper, /[A-Z]/.test(val), "One Uppercase Letter");
+        check(reqNumber, /[0-9]/.test(val), "One Number");
+
+        // Strength UI
+        let score = 0;
+        if (len >= 6) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+
+        updateUI(score, len);
+      });
+
+      function check(el, valid, text) {
+        el.textContent = (valid ? "✔ " : "✖ ") + text;
+        el.style.color = valid ? "#28a745" : "#dc3545";
+      }
+
+      function updateUI(score, len) {
+        if (len === 0) {
+          strengthBar.style.width = "0%";
+          strengthText.textContent = "";
+          return;
+        }
+        const colors = ["#dc3545", "#dc3545", "#ffc107", "#28a745", "#28a745"];
+        const labels = ["Too Short", "Weak", "Medium", "Strong", "Excellent!"];
+        strengthBar.style.width = score * 25 + "%";
+        strengthBar.style.backgroundColor = colors[score];
+        strengthText.textContent = labels[score];
+        strengthText.style.color = colors[score];
+      }
+
+      // --- 3. CLEAR & SUBMIT ---
+      document
+        .getElementById("confirmClear")
+        .addEventListener("click", function () {
+          if (confirm("Clear form?")) {
+            document.getElementById("regForm").reset();
+            feedbackContainer.style.display = "none";
+          }
+        });
+
+      document
+        .getElementById("regForm")
+        .addEventListener("submit", function (e) {
+          if (passwordInput.value.length < 6) {
+            e.preventDefault();
+            alert("Password is too weak!");
+          }
+        });
+    </script>
+  </body>
+</html>
+-->
